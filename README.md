@@ -96,7 +96,7 @@ flutter run
 
 ## 👩‍💻 Autores
 
-| [<img src="https://github.com/ssilveiira.png" width="80px"/><br/><sub>Ana Clara Silveira</sub>](https://github.com/ssilveiira) | Otávio Machado de Oliveira |
+| [<img src="https://github.com/ssilveiira.png" width="80px"/><br/><sub>Ana Clara Silveira</sub>](https://github.com/ssilveiira) | [<img src="https://github.com/OtavioMOliveira.png" width="80px"/><br/><sub>Otávio Machado de Oliveira</sub>](https://github.com/OtavioMOliveira) |
 |:---:|:---:|
 
 ---
