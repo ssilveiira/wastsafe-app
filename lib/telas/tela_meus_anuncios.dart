@@ -264,9 +264,6 @@ class _TelaMeusAnunciosState extends State<TelaMeusAnuncios> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ==========================================
-                // CABEÇALHO CORRIGIDO: Título e Botão separados
-                // ==========================================
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -277,7 +274,7 @@ class _TelaMeusAnunciosState extends State<TelaMeusAnuncios> {
                               fontWeight: FontWeight.w800,
                               fontSize: 32)),
                     ),
-                    const SizedBox(width: 16), // Espaço garantido entre o título e o botão
+                    const SizedBox(width: 16), 
                     if (!_loading && _anuncios.isNotEmpty)
                       ElevatedButton.icon(
                         onPressed: () =>
