@@ -14,8 +14,9 @@ class TelaMarketplace extends StatefulWidget {
 
 class _TelaMarketplaceState extends State<TelaMarketplace> {
   final _searchCtrl = TextEditingController();
-  String _filtroEstado = 'Todos';
-  String _filtroCategoria = 'Todas';
+  String _filtroEstado = 'Estado';
+  String _filtroCategoria = 'Categoria';
+  
   int _paginaAtual = 1;
   static const int _itensPorPagina = 8;
   String? _produtoZoom;
@@ -24,7 +25,7 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
   bool _loading = true;
 
   final List<String> _categoriasFiltro = [
-    'Todas',
+    'Categoria',
     'Smartphones & Tablets',
     'Computadores & Notebooks',
     'Componentes (Hardware)',
@@ -96,10 +97,12 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
           (p['nome'] as String)
               .toLowerCase()
               .contains(_searchCtrl.text.toLowerCase());
+              
       final matchEstado =
-          _filtroEstado == 'Todos' || p['estado'] == _filtroEstado;
+          _filtroEstado == 'Estado' || p['estado'] == _filtroEstado;
       final matchCategoria =
-          _filtroCategoria == 'Todas' || p['categoria'] == _filtroCategoria;
+          _filtroCategoria == 'Categoria' || p['categoria'] == _filtroCategoria;
+          
       return matchSearch && matchEstado && matchCategoria;
     }).toList();
   }
@@ -193,7 +196,7 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
               color: AppTheme.textDark,
               fontSize: 14,
               fontWeight: FontWeight.w500),
-          items: ['Todos', 'Novo', 'Seminovo', 'Descarte']
+          items: ['Estado', 'Novo', 'Seminovo', 'Descarte']
               .map((e) => DropdownMenuItem(value: e, child: Text(e)))
               .toList(),
           onChanged: (v) {

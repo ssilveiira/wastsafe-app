@@ -51,7 +51,7 @@ class _TelaInicialState extends State<TelaInicial> with SingleTickerProviderStat
                 child: SlideTransition(
                   position: _slideAnim,
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 800), // Texto centrado e legível
+                    constraints: const BoxConstraints(maxWidth: 800), 
                     child: Column(
                       children: [
                         Container(
@@ -78,7 +78,7 @@ class _TelaInicialState extends State<TelaInicial> with SingleTickerProviderStat
                         ),
                         const SizedBox(height: 20),
                         Text(
-                          'Conectamos geradores de resíduos a recicladores.\nDescubra como é fácil descartar com responsabilidade.',
+                          'Conectamos geradores de eletrônicos a interessados.\nDescubra como é fácil destinar um eletrônico sem uso com responsabilidade.',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(color: Colors.white.withValues(alpha: 0.85), fontSize: 18, height: 1.6),
                         ),

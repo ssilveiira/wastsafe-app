@@ -12,6 +12,7 @@ class WastSafeFooter extends StatelessWidget {
       color: const Color(0xFFE8F5E9),
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Wrap(
             alignment: WrapAlignment.center,

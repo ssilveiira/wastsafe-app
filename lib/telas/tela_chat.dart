@@ -293,38 +293,44 @@ class _TelaChatState extends State<TelaChat> {
               ],
             ),
           ),
+          
           Container(
-            padding: const EdgeInsets.all(12),
             color: Colors.white,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textoCtrl,
-                    decoration: InputDecoration(
-                      hintText: 'Digite uma mensagem...',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none),
-                      filled: true,
-                      fillColor: Colors.grey.shade100,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
+            child: SafeArea(
+              top: false, 
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _textoCtrl,
+                        decoration: InputDecoration(
+                          hintText: 'Digite uma mensagem...',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none),
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                        ),
+                        onSubmitted: (_) => _enviar(),
+                      ),
                     ),
-                    onSubmitted: (_) => _enviar(),
-                  ),
+                    const SizedBox(width: 8),
+                    Container(
+                      decoration: const BoxDecoration(
+                          color: AppTheme.primary, shape: BoxShape.circle),
+                      child: IconButton(
+                        onPressed: _enviar,
+                        icon: const Icon(Icons.send_rounded,
+                            color: Colors.white, size: 20),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Container(
-                  decoration: const BoxDecoration(
-                      color: AppTheme.primary, shape: BoxShape.circle),
-                  child: IconButton(
-                    onPressed: _enviar,
-                    icon: const Icon(Icons.send_rounded,
-                        color: Colors.white, size: 20),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
