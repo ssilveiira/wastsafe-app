@@ -80,6 +80,12 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
         setState(() {
           _loading = false;
         });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Falha ao conectar com o banco. Verifique a internet e tente novamente.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }
@@ -91,9 +97,9 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
               .toLowerCase()
               .contains(_searchCtrl.text.toLowerCase());
       final matchEstado =
-          _filtroEstado == 'Estado' || p['estado'] == _filtroEstado;
+          _filtroEstado == 'Todos' || p['estado'] == _filtroEstado;
       final matchCategoria =
-          _filtroCategoria == 'Categoria' || p['categoria'] == _filtroCategoria;
+          _filtroCategoria == 'Todas' || p['categoria'] == _filtroCategoria;
       return matchSearch && matchEstado && matchCategoria;
     }).toList();
   }
@@ -448,7 +454,6 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
                   ),
                 ),
               ),
-
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
