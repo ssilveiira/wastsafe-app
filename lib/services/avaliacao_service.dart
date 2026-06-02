@@ -9,7 +9,7 @@ class AvaliacaoService {
     final response = await _supabase
         .from('profiles')
         .select('id, nome')
-        .neq('id', meuId ?? '') // Oculta a si mesmo
+        .neq('id', meuId ?? '') 
         .order('nome');
     return response;
   }

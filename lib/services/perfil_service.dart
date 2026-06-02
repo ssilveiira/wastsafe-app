@@ -46,9 +46,6 @@ class PerfilService {
           .createSignedUrl(path, 60 * 60 * 24 * 365);
     }
 
-    // ========================================================
-    // CORREÇÃO APLICADA AQUI: Tipagem explícita adicionada
-    // ========================================================
     final Map<String, dynamic> dadosAtualizados = {
       'nome': nome,
       'telefone': telefone,

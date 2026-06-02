@@ -14,7 +14,6 @@ class AuthService extends ChangeNotifier {
   String? get userName => _userName;
   String? get userEmail => _userEmail;
   
-  // NOVO GETTER
   String? get userId => _supabase.auth.currentUser?.id;
 
   AuthService._() {
