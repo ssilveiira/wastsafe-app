@@ -116,11 +116,7 @@ class _WastSafeNavBarState extends State<WastSafeNavBar> {
               ),
             ),
             
-          if (!isMobile)
-            if (_auth.isLoggedIn) 
-              _areaLogado(context)
-            else 
-              _areaDeslogado(context),
+          if (!isMobile && _auth.isLoggedIn) _areaLogado(context),
 
           if (isMobile) _menuMobile(context),
         ],
@@ -251,29 +247,6 @@ class _WastSafeNavBarState extends State<WastSafeNavBar> {
       ],
     );
   }
-
-  Widget _areaDeslogado(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextButton(
-          onPressed: () => Navigator.pushReplacementNamed(context, '/login'),
-          child: Text('Login', style: GoogleFonts.poppins(color: AppTheme.primary, fontWeight: FontWeight.w600)),
-        ),
-        const SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: () => Navigator.pushReplacementNamed(context, '/cadastro'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppTheme.primary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          ),
-          child: Text('Cadastrar', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13)),
-        ),
-      ],
-    );
-  }
-
   Widget _menuMobile(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,

@@ -136,90 +136,117 @@ class _TelaMeusAnunciosState extends State<TelaMeusAnuncios> {
   }
 
   Widget _buildDashboardMetricas() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 32),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.primaryLight.withValues(alpha: 0.3)),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
-              blurRadius: 10,
-              offset: const Offset(0, 4))
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                color: AppTheme.primaryLight.withValues(alpha: 0.1),
-                shape: BoxShape.circle),
-            child:
-                const Icon(Icons.star_rounded, color: Colors.amber, size: 40),
-          ),
-          const SizedBox(width: 24),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Reputação',
-                  style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.textMuted)),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(_notaMedia.toStringAsFixed(1),
-                      style: GoogleFonts.poppins(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.textDark)),
-                  const SizedBox(width: 8),
-                  Text('/ 5.0',
-                      style: GoogleFonts.poppins(
-                          fontSize: 18, color: Colors.grey)),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(width: 24),
-          Container(height: 50, width: 1, color: Colors.grey.shade200),
-          const SizedBox(width: 24),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Avaliações',
-                  style: GoogleFonts.poppins(
-                      fontSize: 14, color: AppTheme.textMuted)),
-              Text('$_totalAvaliacoes comentários',
-                  style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.primary)),
-            ],
-          ),
-          const Spacer(),
-          OutlinedButton.icon(
-            onPressed: () {
-              Navigator.pushNamed(context, '/meus-comentarios');
-            },
-            icon: const Icon(Icons.forum_outlined, size: 18),
-            label: Text('Ler Comentários',
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppTheme.primary,
-              side: const BorderSide(color: AppTheme.primary),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 850;
+
+        final metricasBloco = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryLight.withValues(alpha: 0.1),
+                  shape: BoxShape.circle),
+              child:
+                  const Icon(Icons.star_rounded, color: Colors.amber, size: 40),
             ),
+            const SizedBox(width: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Reputação',
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textMuted)),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(_notaMedia.toStringAsFixed(1),
+                        style: GoogleFonts.poppins(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textDark)),
+                    const SizedBox(width: 8),
+                    Text('/ 5.0',
+                        style: GoogleFonts.poppins(
+                            fontSize: 18, color: Colors.grey)),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(width: 24),
+            Container(height: 50, width: 1, color: Colors.grey.shade200),
+            const SizedBox(width: 24),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Avaliações',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, color: AppTheme.textMuted)),
+                Text('$_totalAvaliacoes comentários',
+                    style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.primary)),
+              ],
+            ),
+          ],
+        );
+
+        final botaoLerComentarios = OutlinedButton.icon(
+          onPressed: () {
+            Navigator.pushNamed(context, '/meus-comentarios');
+          },
+          icon: const Icon(Icons.forum_outlined, size: 18),
+          label: Text('Ler Comentários',
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppTheme.primary,
+            side: const BorderSide(color: AppTheme.primary),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8)),
           ),
-        ],
-      ),
+        );
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 32),
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppTheme.primaryLight.withValues(alpha: 0.3)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4))
+            ],
+          ),
+          child: isMobile
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: metricasBloco,
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(width: double.infinity, child: botaoLerComentarios),
+                  ],
+                )
+              : Row(
+                  children: [
+                    metricasBloco,
+                    const Spacer(),
+                    botaoLerComentarios,
+                  ],
+                ),
+        );
+      },
     );
   }
 
@@ -237,14 +264,20 @@ class _TelaMeusAnunciosState extends State<TelaMeusAnuncios> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ==========================================
+                // CABEÇALHO CORRIGIDO: Título e Botão separados
+                // ==========================================
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Meus Anúncios',
-                        style: GoogleFonts.poppins(
-                            color: AppTheme.textDark,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 32)),
+                    Expanded(
+                      child: Text('Meus Anúncios',
+                          style: GoogleFonts.poppins(
+                              color: AppTheme.textDark,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 32)),
+                    ),
+                    const SizedBox(width: 16), // Espaço garantido entre o título e o botão
                     if (!_loading && _anuncios.isNotEmpty)
                       ElevatedButton.icon(
                         onPressed: () =>
@@ -335,159 +368,199 @@ class _TelaMeusAnunciosState extends State<TelaMeusAnuncios> {
     final preco = (anuncio['preco'] as num?)?.toDouble() ?? 0.0;
     final isDoacao = anuncio['is_doacao'] == true || preco == 0;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: isActive ? Colors.white : Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withValues(alpha: 0.03),
-              blurRadius: 10,
-              offset: const Offset(0, 4))
-        ],
-        border: Border.all(color: Colors.grey.shade100),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isMobile = constraints.maxWidth < 650;
+
+        final acoesBotoes = Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Opacity(
-              opacity: isActive ? 1.0 : 0.5,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: (anuncio['imagens'] != null &&
-                        (anuncio['imagens'] as List).isNotEmpty)
-                    ? Image.network(
-                        (anuncio['imagens'] as List).first as String,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => _fallbackImage(),
-                      )
-                    : _fallbackImage(),
+            Tooltip(
+              message: 'Editar Anúncio',
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  TelaAnunciar(anuncioParaEditar: anuncio)))
+                      .then((atualizou) {
+                    if (atualizou == true) {
+                      _carregarDadosCompletos();
+                    }
+                  });
+                },
+                icon: Icon(Icons.edit_outlined, color: Colors.blue.shade600),
+                style: IconButton.styleFrom(
+                    backgroundColor: Colors.blue.shade50),
               ),
             ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: isActive
-                                ? Colors.green.withValues(alpha: 0.1)
-                                : Colors.orange.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Text(
-                          isActive
-                              ? 'ATIVO NO MARKETPLACE'
-                              : 'PAUSADO / NEGOCIADO',
-                          style: GoogleFonts.poppins(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: isActive
-                                  ? Colors.green.shade700
-                                  : Colors.orange.shade700),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(anuncio['categoria'] ?? 'Componente',
-                          style: GoogleFonts.poppins(
-                              fontSize: 12, color: AppTheme.textMuted)),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    anuncio['titulo'] ?? 'Sem título',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: isActive
-                          ? AppTheme.textDark
-                          : Colors.grey.shade500, 
-                      decoration: isActive
-                          ? TextDecoration.none
-                          : TextDecoration.lineThrough,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    isDoacao
-                        ? 'Doação (Gratuito)'
-                        : 'R\$ ${preco.toStringAsFixed(2)}',
-                    style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: isDoacao
-                            ? Colors.green
-                            : (isActive ? AppTheme.primary : Colors.grey)),
-                  ),
-                ],
+            const SizedBox(width: 8),
+            Tooltip(
+              message: isActive
+                  ? 'Pausar (Tirar do ar)'
+                  : 'Reativar (Voltar pra vitrine)',
+              child: IconButton(
+                onPressed: () => _pausarOuAtivar(anuncio),
+                icon: Icon(
+                    isActive
+                        ? Icons.pause_circle_outline
+                        : Icons.play_circle_outline,
+                    color: Colors.orange.shade600),
+                style: IconButton.styleFrom(
+                    backgroundColor: Colors.orange.shade50),
               ),
             ),
-            Row(
-              children: [
-                Tooltip(
-                  message: 'Editar Anúncio',
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      TelaAnunciar(anuncioParaEditar: anuncio)))
-                          .then((atualizou) {
-                        if (atualizou == true) {
-                          _carregarDadosCompletos();
-                        }
-                      });
-                    },
-                    icon:
-                        Icon(Icons.edit_outlined, color: Colors.blue.shade600),
-                    style: IconButton.styleFrom(
-                        backgroundColor: Colors.blue.shade50),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Tooltip(
-                  message: isActive
-                      ? 'Pausar (Tirar do ar)'
-                      : 'Reativar (Voltar pra vitrine)',
-                  child: IconButton(
-                    onPressed: () => _pausarOuAtivar(anuncio),
-                    icon: Icon(
-                        isActive
-                            ? Icons.pause_circle_outline
-                            : Icons.play_circle_outline,
-                        color: Colors.orange.shade600),
-                    style: IconButton.styleFrom(
-                        backgroundColor: Colors.orange.shade50),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Tooltip(
-                  message: 'Excluir Anúncio',
-                  child: IconButton(
-                    onPressed: () => _excluirAnuncio(anuncio['id'].toString()),
-                    icon:
-                        Icon(Icons.delete_outline, color: Colors.red.shade600),
-                    style: IconButton.styleFrom(
-                        backgroundColor: Colors.red.shade50),
-                  ),
-                ),
-              ],
+            const SizedBox(width: 8),
+            Tooltip(
+              message: 'Excluir Anúncio',
+              child: IconButton(
+                onPressed: () => _excluirAnuncio(anuncio['id'].toString()),
+                icon: Icon(Icons.delete_outline, color: Colors.red.shade600),
+                style: IconButton.styleFrom(backgroundColor: Colors.red.shade50),
+              ),
             ),
           ],
-        ),
-      ),
+        );
+
+        final infoProduto = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                      color: isActive
+                          ? Colors.green.withValues(alpha: 0.1)
+                          : Colors.orange.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Text(
+                    isActive
+                        ? 'ATIVO NO MARKETPLACE'
+                        : 'PAUSADO / NEGOCIADO',
+                    style: GoogleFonts.poppins(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: isActive
+                            ? Colors.green.shade700
+                            : Colors.orange.shade700),
+                  ),
+                ),
+                Text(anuncio['categoria'] ?? 'Componente',
+                    style: GoogleFonts.poppins(
+                        fontSize: 12, color: AppTheme.textMuted)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              anuncio['titulo'] ?? 'Sem título',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: isActive ? AppTheme.textDark : Colors.grey.shade500,
+                decoration: isActive
+                    ? TextDecoration.none
+                    : TextDecoration.lineThrough,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              isDoacao
+                  ? 'Doação (Gratuito)'
+                  : 'R\$ ${preco.toStringAsFixed(2)}',
+              style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: isDoacao
+                      ? Colors.green
+                      : (isActive ? AppTheme.primary : Colors.grey)),
+            ),
+          ],
+        );
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: isActive ? Colors.white : Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4))
+            ],
+            border: Border.all(color: Colors.grey.shade100),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: isMobile
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Opacity(
+                            opacity: isActive ? 1.0 : 0.5,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: (anuncio['imagens'] != null &&
+                                      (anuncio['imagens'] as List).isNotEmpty)
+                                  ? Image.network(
+                                      (anuncio['imagens'] as List).first as String,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (_, __, ___) => _fallbackImage(),
+                                    )
+                                  : _fallbackImage(),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(child: infoProduto),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: acoesBotoes,
+                      ),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Opacity(
+                        opacity: isActive ? 1.0 : 0.5,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: (anuncio['imagens'] != null &&
+                                  (anuncio['imagens'] as List).isNotEmpty)
+                              ? Image.network(
+                                  (anuncio['imagens'] as List).first as String,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, __, ___) => _fallbackImage(),
+                                )
+                              : _fallbackImage(),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(child: infoProduto),
+                      acoesBotoes,
+                    ],
+                  ),
+          ),
+        );
+      },
     );
   }
 

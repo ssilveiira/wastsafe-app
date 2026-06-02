@@ -91,9 +91,9 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
               .toLowerCase()
               .contains(_searchCtrl.text.toLowerCase());
       final matchEstado =
-          _filtroEstado == 'Todos' || p['estado'] == _filtroEstado;
+          _filtroEstado == 'Estado' || p['estado'] == _filtroEstado;
       final matchCategoria =
-          _filtroCategoria == 'Todas' || p['categoria'] == _filtroCategoria;
+          _filtroCategoria == 'Categoria' || p['categoria'] == _filtroCategoria;
       return matchSearch && matchEstado && matchCategoria;
     }).toList();
   }
@@ -115,7 +115,91 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
     super.dispose();
   }
 
-  Widget _buildFiltros() {
+  Widget _buildFiltros(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 850;
+
+    final searchField = TextField(
+      controller: _searchCtrl,
+      onChanged: (_) {
+        setState(() {
+          _paginaAtual = 1;
+        });
+      },
+      style: GoogleFonts.poppins(fontSize: 14),
+      decoration: InputDecoration(
+        hintText: 'Pesquisar materiais...',
+        hintStyle: GoogleFonts.poppins(color: Colors.grey.shade500),
+        prefixIcon: const Icon(Icons.search, color: AppTheme.primaryLight),
+        filled: true,
+        fillColor: Colors.grey.shade50,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey.shade200)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey.shade200)),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+      ),
+    );
+
+    final dropCategoria = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          border: Border.all(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.circular(12)),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _filtroCategoria,
+          isExpanded: true,
+          icon: const Icon(Icons.layers_outlined,
+              color: AppTheme.primary, size: 20),
+          style: GoogleFonts.poppins(
+              color: AppTheme.textDark,
+              fontSize: 14,
+              fontWeight: FontWeight.w500),
+          items: _categoriasFiltro
+              .map((e) => DropdownMenuItem(
+                  value: e, child: Text(e, overflow: TextOverflow.ellipsis)))
+              .toList(),
+          onChanged: (v) {
+            setState(() {
+              _filtroCategoria = v!;
+              _paginaAtual = 1;
+            });
+          },
+        ),
+      ),
+    );
+
+    final dropEstado = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          border: Border.all(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.circular(12)),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: _filtroEstado,
+          isExpanded: true,
+          icon: const Icon(Icons.keyboard_arrow_down, color: AppTheme.primary),
+          style: GoogleFonts.poppins(
+              color: AppTheme.textDark,
+              fontSize: 14,
+              fontWeight: FontWeight.w500),
+          items: ['Todos', 'Novo', 'Seminovo', 'Descarte']
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+          onChanged: (v) {
+            setState(() {
+              _filtroEstado = v!;
+              _paginaAtual = 1;
+            });
+          },
+        ),
+      ),
+    );
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
@@ -128,103 +212,25 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
               offset: const Offset(0, 5))
         ],
       ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: TextField(
-              controller: _searchCtrl,
-              onChanged: (_) {
-                setState(() {
-                  _paginaAtual = 1;
-                });
-              },
-              style: GoogleFonts.poppins(fontSize: 14),
-              decoration: InputDecoration(
-                hintText: 'Pesquisar materiais...',
-                hintStyle: GoogleFonts.poppins(color: Colors.grey.shade500),
-                prefixIcon:
-                    const Icon(Icons.search, color: AppTheme.primaryLight),
-                filled: true,
-                fillColor: Colors.grey.shade50,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade200)),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade200)),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-              ),
+      child: isMobile
+          ? Column(
+              children: [
+                searchField,
+                const SizedBox(height: 16),
+                dropCategoria,
+                const SizedBox(height: 16),
+                dropEstado,
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(flex: 3, child: searchField),
+                const SizedBox(width: 16),
+                Expanded(flex: 2, child: dropCategoria),
+                const SizedBox(width: 16),
+                Expanded(flex: 1, child: dropEstado),
+              ],
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
-                  border: Border.all(color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.circular(12)),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _filtroCategoria,
-                  isExpanded: true,
-                  icon: const Icon(Icons.layers_outlined,
-                      color: AppTheme.primary, size: 20),
-                  style: GoogleFonts.poppins(
-                      color: AppTheme.textDark,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                  items: _categoriasFiltro
-                      .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e, overflow: TextOverflow.ellipsis)))
-                      .toList(),
-                  onChanged: (v) {
-                    setState(() {
-                      _filtroCategoria = v!;
-                      _paginaAtual = 1;
-                    });
-                  },
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
-                  border: Border.all(color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.circular(12)),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _filtroEstado,
-                  isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down,
-                      color: AppTheme.primary),
-                  style: GoogleFonts.poppins(
-                      color: AppTheme.textDark,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                  items: ['Todos', 'Novo', 'Seminovo', 'Descarte']
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
-                  onChanged: (v) {
-                    setState(() {
-                      _filtroEstado = v!;
-                      _paginaAtual = 1;
-                    });
-                  },
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -443,7 +449,6 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
                 ),
               ),
 
-              // RODAPÉ FIXO DO MODAL (COM FOTO DO VENDEDOR)
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -575,7 +580,7 @@ class _TelaMarketplaceState extends State<TelaMarketplace> {
                                     fontWeight: FontWeight.w800,
                                     color: AppTheme.primary)),
                             const SizedBox(height: 24),
-                            _buildFiltros(),
+                            _buildFiltros(context),
                             const SizedBox(height: 16),
                             Text(
                                 '${_produtosFiltrados.length} produto(s) encontrado(s)',
